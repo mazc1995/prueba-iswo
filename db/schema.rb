@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_31_032848) do
+ActiveRecord::Schema.define(version: 2021_12_31_043226) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,7 +31,9 @@ ActiveRecord::Schema.define(version: 2021_12_31_032848) do
     t.bigint "document_type_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "procedure_id", null: false
     t.index ["document_type_id"], name: "index_documents_on_document_type_id"
+    t.index ["procedure_id"], name: "index_documents_on_procedure_id"
   end
 
   create_table "procedures", force: :cascade do |t|
@@ -49,5 +51,17 @@ ActiveRecord::Schema.define(version: 2021_12_31_032848) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "workers", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "document_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["document_id"], name: "index_workers_on_document_id"
+    t.index ["user_id"], name: "index_workers_on_user_id"
+  end
+
   add_foreign_key "documents", "document_types"
+  add_foreign_key "documents", "procedures"
+  add_foreign_key "workers", "documents"
+  add_foreign_key "workers", "users"
 end

@@ -11,8 +11,9 @@ class DocumentsController < ApplicationController
   end
 
   # GET /documents/new
-  def new
-    @document = Document.new
+  def new     
+    # WORKFLOW STATE POR DEFECTO DRAFT Y CUADRAR EL CODE!
+    @document = Document.new(workflow_state: 'Draft')        
   end
 
   # GET /documents/1/edit
@@ -21,8 +22,7 @@ class DocumentsController < ApplicationController
 
   # POST /documents or /documents.json
   def create
-    @document = Document.new(document_params)
-
+    @document = Document.new(document_params)    
     respond_to do |format|
       if @document.save
         format.html { redirect_to document_url(@document), notice: "Document was successfully created." }
@@ -65,6 +65,6 @@ class DocumentsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def document_params
-      params.require(:document).permit(:name, :workflow_state, :code, :date, :category, :document_type_id)
+      params.require(:document).permit(:name, :workflow_state, :code, :date, :category, :document_type_id, :procedure_id)
     end
 end
