@@ -3,6 +3,16 @@
 <%= render @document %>
 
 <div>
+  <% if @workflow_state == 'Draft' %>
+    <%= button_to "Enviar", "./#{@document.id}/update_workflow_state", method: :put %>
+  <% elsif @workflow_state == 'awaiting_review' %>
+    <%= button_to "Revisar", "./#{@document.id}/update_workflow_state", method: :put %>
+  <% elsif @workflow_state == 'awaiting_approve' %>
+    <%= button_to "Aprobar", "./#{@document.id}/update_workflow_state", method: :put %>
+  <% end %>
+</div>
+
+<div>
   <%= link_to "Edit this document", edit_document_path(@document) %> |
   <%= link_to "Back to documents", documents_path %>
 
