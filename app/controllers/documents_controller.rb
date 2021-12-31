@@ -11,9 +11,8 @@ class DocumentsController < ApplicationController
   end
 
   # GET /documents/new
-  def new     
-    # WORKFLOW STATE POR DEFECTO DRAFT Y CUADRAR EL CODE!
-    @document = Document.new(workflow_state: 'Draft')        
+  def new         
+    @document = Document.new
   end
 
   # GET /documents/1/edit
@@ -22,7 +21,14 @@ class DocumentsController < ApplicationController
 
   # POST /documents or /documents.json
   def create
-    @document = Document.new(document_params)    
+    parameters = document_params
+    cp = Procedure.find(document_params['procedure_id']).code
+    cd = DocumentType.find(document_params['document_type_id']).code
+    cant = Document.where(document_type_id: parameters['document_type_id'], procedure_id: parameters['procedure_id']).count.to_s
+    parameters[:code] = cp+cd+cant
+    puts "AQUI IMPRIMO LA PRUEBA"
+    puts cant
+    @document = Document.new(parameters)    
     respond_to do |format|
       if @document.save
         format.html { redirect_to document_url(@document), notice: "Document was successfully created." }

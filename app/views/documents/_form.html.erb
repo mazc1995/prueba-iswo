@@ -35,6 +35,8 @@
     <%= form.label :procedure_id, style: "display: block" %>
     <%= form.select :procedure_id, Procedure.all.map {|p| [p.name, p.id ]} %>
   </div>
+  
+  <%= form.hidden_field :workflow_state, value: 'Draft' %>
 
   <div>
     <%= form.submit %>

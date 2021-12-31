@@ -4,7 +4,7 @@ class Document < ApplicationRecord
   belongs_to :procedure
   validates :name, presence: true
   validates :workflow_state, presence: true
-  validates :code, presence: true
   validates :date, presence: true
-  validates :category, presence: true  
+  validates :category, presence: true   
+
 end
